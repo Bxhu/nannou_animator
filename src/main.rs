@@ -15,7 +15,7 @@ fn main() {
 }
 
 struct Model {
-    ps: particle_system::ParticleSystem,
+    ps: ParticleSystem,
 }
 
 fn model(app: &App) -> Model {
