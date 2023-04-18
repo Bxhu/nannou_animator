@@ -5,16 +5,17 @@
 // example 4-03: Exercise Moving Particle System
 use nannou::prelude::*;
 
-mod particles;
+mod particle;
+mod particle_system;
 
-use particles::*;
+use particle_system::*;
 
 fn main() {
     nannou::app(model).update(update).run();
 }
 
 struct Model {
-    ps: particles::ParticleSystem,
+    ps: particle_system::ParticleSystem,
 }
 
 fn model(app: &App) -> Model {
