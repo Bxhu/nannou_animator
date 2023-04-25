@@ -1,5 +1,5 @@
 use nannou::prelude::*;
-use crate::particle::*;
+use crate::particles::particle::*;
 
 pub struct ParticleSystem {
     particles: Vec<Particle>,
