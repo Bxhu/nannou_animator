@@ -1,5 +1,5 @@
 use nannou::prelude::*;
-use crate::particles::particle::*;
+use crate::circles::circle::*;
 
 pub struct ObjectSystem {
     particles: Vec<Particle>,

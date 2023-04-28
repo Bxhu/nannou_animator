@@ -1,6 +1,6 @@
 use nannou::prelude::*;
 
-mod particles;
+mod circles;
 mod object_system;
 
 use crate::object_system::*;
