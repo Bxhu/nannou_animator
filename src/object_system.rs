@@ -1,16 +1,16 @@
 use nannou::prelude::*;
 use crate::particles::particle::*;
 
-pub struct ParticleSystem {
+pub struct ObjectSystem {
     particles: Vec<Particle>,
     pub origin: Point2,
 }
 
-impl ParticleSystem {
+impl ObjectSystem {
     pub fn new(position: Point2) -> Self {
         let origin = position;
         let particles = Vec::new();
-        ParticleSystem { origin, particles }
+        ObjectSystem { origin, particles }
     }
 
     pub fn add_particle(&mut self) {

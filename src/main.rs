@@ -1,21 +1,22 @@
 use nannou::prelude::*;
 
 mod particles;
+mod object_system;
 
-use crate::particles::particle_system::*;
+use crate::object_system::*;
 
 fn main() {
     nannou::app(model).update(update).run();
 }
 
 struct Model {
-    ps: ParticleSystem,
+    ps: ObjectSystem,
 }
 
 fn model(app: &App) -> Model {
     app.new_window().size(1028, 640).view(view).build().unwrap();
     let (_w, h) = app.window_rect().w_h();
-    let ps = ParticleSystem::new(pt2(0.0, (h as f32 / 2.0) - 50.0));
+    let ps = ObjectSystem::new(pt2(0.0, (h as f32 / 2.0) - 50.0));
     Model { ps }
 }
 
