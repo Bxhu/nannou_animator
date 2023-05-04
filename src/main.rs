@@ -11,19 +11,28 @@ fn main() {
 
 struct Model {
     object_system: ObjectSystem,
+    next_update_time: f32,
 }
 
 fn model(app: &App) -> Model {
     app.new_window().size(1536, 960).view(view).build().unwrap();
     let (_w, _h) = app.window_rect().w_h();
     let object_system = ObjectSystem::new(pt2(0.0, 0.0));
-    Model { object_system }
+    let next_update_time = 1.0;
+    Model {
+        object_system,
+        next_update_time,
+    }
 }
 
-fn update(app: &App, model: &mut Model, _update: Update) {
-    model.object_system.origin = pt2(app.mouse.x, app.mouse.y);
-    model.object_system.add_object();
-    model.object_system.update();
+fn update(_app: &App, _model: &mut Model, _update: Update) {
+    let elapsed_time = _app.duration.since_start.as_secs_f32();
+    if elapsed_time > _model.next_update_time {
+        _model.object_system.add_object();
+
+        _model.next_update_time = elapsed_time + random_range(0.03, 0.07);
+    }
+    _model.object_system.update();
 }
 
 fn view(app: &App, model: &Model, frame: Frame) {
