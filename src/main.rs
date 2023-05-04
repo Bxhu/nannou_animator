@@ -10,28 +10,28 @@ fn main() {
 }
 
 struct Model {
-    ps: ObjectSystem,
+    object_system: ObjectSystem,
 }
 
 fn model(app: &App) -> Model {
-    app.new_window().size(1028, 640).view(view).build().unwrap();
-    let (_w, h) = app.window_rect().w_h();
-    let ps = ObjectSystem::new(pt2(0.0, (h as f32 / 2.0) - 50.0));
-    Model { ps }
+    app.new_window().size(1536, 960).view(view).build().unwrap();
+    let (_w, _h) = app.window_rect().w_h();
+    let object_system = ObjectSystem::new(pt2(0.0, 0.0));
+    Model { object_system }
 }
 
-fn update(app: &App, m: &mut Model, _update: Update) {
-    m.ps.origin = pt2(app.mouse.x, app.mouse.y);
-    m.ps.add_particle();
-    m.ps.update();
+fn update(app: &App, model: &mut Model, _update: Update) {
+    model.object_system.origin = pt2(app.mouse.x, app.mouse.y);
+    model.object_system.add_object();
+    model.object_system.update();
 }
 
-fn view(app: &App, m: &Model, frame: Frame) {
+fn view(app: &App, model: &Model, frame: Frame) {
     // Begin drawing
     let draw = app.draw();
     draw.background().color(WHITE);
 
-    m.ps.draw(&draw);
+    model.object_system.draw(&draw);
 
     // Write the result of our drawing to the window's frame.
     draw.to_frame(app, &frame).unwrap();
