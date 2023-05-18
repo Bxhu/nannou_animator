@@ -2,17 +2,31 @@ use crate::circles::particle::*;
 use nannou::prelude::*;
 
 const MAX_OBJECTS: i32 = 5;
+const FIVE_MINUTES: f32 = 300.0;
+const TEN_MINUTES: f32 = 600.0;
+const REALLY_LONG: f32 = 10000000000000000000000.0;
 
 pub struct ObjectSystem {
     objects: Vec<Particle>,
     pub origin: Point2,
+    pub width: f32,
+    pub height: f32,
+    pub next_update_time: f32,
 }
 
 impl ObjectSystem {
-    pub fn new(position: Point2) -> Self {
+    pub fn new(position: Point2, width: f32, height: f32) -> Self {
         let origin = position;
         let objects = Vec::new();
-        ObjectSystem { origin, objects }
+        // let next_update_time = REALLY_LONG;
+        let next_update_time = 1.0;
+        ObjectSystem {
+            objects,
+            origin,
+            width,
+            height,
+            next_update_time,
+        }
     }
 
     pub fn add_object(&mut self) {
@@ -28,9 +42,9 @@ impl ObjectSystem {
         }
     }
 
-    pub fn draw(&self, draw: &Draw) {
+    pub fn draw_all(&self, draw: &Draw) {
         for o in self.objects.iter() {
-            o.display(&draw);
+            o.draw(&draw);
         }
     }
 }
