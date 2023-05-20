@@ -1,5 +1,7 @@
 use crate::circles::particle::*;
 use nannou::prelude::*;
+use std::collections::HashMap;
+use std::num::Wrapping;
 
 const MAX_OBJECTS: i32 = 5;
 const FIVE_MINUTES: f32 = 300.0;
@@ -7,17 +9,19 @@ const TEN_MINUTES: f32 = 600.0;
 const REALLY_LONG: f32 = 10000000000000000000000.0;
 
 pub struct ObjectSystem {
-    objects: Vec<Particle>,
+    objects: HashMap<u16, Particle>,
     pub origin: Point2,
     pub width: f32,
     pub height: f32,
     pub next_update_time: f32,
+    pub next_id: u16,
 }
 
 impl ObjectSystem {
     pub fn new(position: Point2, width: f32, height: f32) -> Self {
         let origin = position;
-        let objects = Vec::new();
+        let objects = HashMap::new();
+        let next_id = 0;
         // let next_update_time = REALLY_LONG;
         let next_update_time = 1.0;
         ObjectSystem {
@@ -26,25 +30,33 @@ impl ObjectSystem {
             width,
             height,
             next_update_time,
+            next_id,
         }
     }
 
     pub fn add_object(&mut self) {
-        self.objects.push(Particle::new(self.origin));
+        self.objects
+            .insert(self.next_id, Particle::new(self.origin));
+        self.next_id = Wrapping(self.next_id + 1).0;
     }
 
     pub fn update(&mut self) {
-        for i in (0..self.objects.len()).rev() {
-            self.objects[i].update();
-            if self.objects[i].is_dead() {
-                self.objects.remove(i);
+        let mut object_ids_to_remove = Vec::new();
+        for (key, value) in self.objects.iter_mut() {
+            value.update();
+            if value.is_dead() {
+                object_ids_to_remove.push(key.clone());
             }
+        }
+
+        for object_id in object_ids_to_remove {
+            self.objects.remove(&object_id);
         }
     }
 
     pub fn draw_all(&self, draw: &Draw) {
-        for o in self.objects.iter() {
-            o.draw(&draw);
+        for value in self.objects.values() {
+            value.draw(draw);
         }
     }
 }
