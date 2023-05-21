@@ -1,6 +1,7 @@
 use nannou::prelude::*;
 
 mod circles;
+mod helpers;
 mod object_system;
 
 use crate::object_system::*;

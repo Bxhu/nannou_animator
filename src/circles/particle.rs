@@ -2,6 +2,7 @@ use nannou::prelude::*;
 
 // A simple particle type
 pub struct Particle {
+    id: u16,
     position: Point2,
     velocity: Vec2,
     acceleration: Vec2,
@@ -9,12 +10,12 @@ pub struct Particle {
 }
 
 impl Particle {
-    pub fn new(l: Point2) -> Self {
+    pub fn new(id: u16, position: Point2) -> Self {
         let acceleration = vec2(0.0, 0.05);
         let velocity = vec2(random_f32() * 2.0 - 1.0, random_f32() - 1.0);
-        let position = l;
         let life_span = 255.0;
         Particle {
+            id,
             acceleration,
             velocity,
             position,

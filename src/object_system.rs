@@ -1,3 +1,4 @@
+use crate::circles::circle::*;
 use crate::circles::particle::*;
 use nannou::prelude::*;
 use std::collections::HashMap;
@@ -7,6 +8,12 @@ const MAX_OBJECTS: i32 = 5;
 const FIVE_MINUTES: f32 = 300.0;
 const TEN_MINUTES: f32 = 600.0;
 const REALLY_LONG: f32 = 10000000000000000000000.0;
+
+pub trait Drawable {
+    fn new(id: u16, position: Point2) -> Self;
+    fn update(&mut self);
+    fn draw(&self, draw: &Draw);
+}
 
 pub struct ObjectSystem {
     objects: HashMap<u16, Particle>,
@@ -36,7 +43,7 @@ impl ObjectSystem {
 
     pub fn add_object(&mut self) {
         self.objects
-            .insert(self.next_id, Particle::new(self.origin));
+            .insert(self.next_id, Particle::new(self.next_id, self.origin));
         self.next_id = Wrapping(self.next_id + 1).0;
     }
 
