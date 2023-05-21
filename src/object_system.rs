@@ -13,10 +13,11 @@ pub trait Drawable {
     fn new(id: u16, position: Point2) -> Self;
     fn update(&mut self);
     fn draw(&self, draw: &Draw);
+    fn has_died(&self) -> bool;
 }
 
 pub struct ObjectSystem {
-    objects: HashMap<u16, Particle>,
+    objects: HashMap<u16, Circle>,
     pub origin: Point2,
     pub width: f32,
     pub height: f32,
@@ -43,7 +44,7 @@ impl ObjectSystem {
 
     pub fn add_object(&mut self) {
         self.objects
-            .insert(self.next_id, Particle::new(self.next_id, self.origin));
+            .insert(self.next_id, Circle::new(self.next_id, self.origin));
         self.next_id = Wrapping(self.next_id + 1).0;
     }
 
@@ -51,7 +52,7 @@ impl ObjectSystem {
         let mut object_ids_to_remove = Vec::new();
         for (key, value) in self.objects.iter_mut() {
             value.update();
-            if value.is_dead() {
+            if value.has_died() {
                 object_ids_to_remove.push(key.clone());
             }
         }

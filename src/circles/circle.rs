@@ -8,7 +8,7 @@ pub struct Circle {
     position: Point2,
     radius: f32,
     color: Rgba,
-    is_alive: bool,
+    is_dead: bool,
 }
 
 impl Drawable for Circle {
@@ -20,12 +20,12 @@ impl Drawable for Circle {
             position,
             radius,
             color,
-            is_alive: true,
+            is_dead: false,
         }
     }
 
     fn update(&mut self) {
-        self.is_alive = still_alive();
+        self.is_dead = has_died();
     }
 
     fn draw(&self, draw: &Draw) {
@@ -35,5 +35,9 @@ impl Drawable for Circle {
             self.color.blue,
             self.color.alpha,
         );
+    }
+
+    fn has_died(&self) -> bool {
+        self.is_dead
     }
 }

@@ -41,7 +41,7 @@ impl Particle {
     }
 
     // Is the particle still useful?
-    pub fn is_dead(&self) -> bool {
+    pub fn has_died(&self) -> bool {
         if self.life_span < 0.0 {
             true
         } else {
