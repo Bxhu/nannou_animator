@@ -12,6 +12,7 @@ pub fn generate_random_color() -> Rgba {
 
 pub fn has_died() -> bool {
     let mut rng = rand::thread_rng();
-    let random_num: u8 = rng.gen_range(0..=99);
-    random_num == 99
+    let max = 10000000;
+    let random_num: u32 = rng.gen_range(1..=max);
+    random_num == max
 }
