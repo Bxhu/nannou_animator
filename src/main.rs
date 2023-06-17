@@ -23,7 +23,9 @@ fn model(app: &App) -> Model {
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
     let elapsed_time = _app.duration.since_start.as_secs_f32();
-    _model.os.update(elapsed_time);
+    _model
+        .os
+        .update(elapsed_time, pt2(_app.mouse.x, _app.mouse.y));
 }
 
 fn view(app: &App, model: &Model, frame: Frame) {
