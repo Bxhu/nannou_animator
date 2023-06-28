@@ -71,7 +71,8 @@ impl ObjectSystem {
         if self.objects.len() < MAX_OBJECTS && elapsed_time > self.next_update_time {
             self.add_object();
 
-            self.next_update_time = elapsed_time + random_range(0.00001, 0.00002);
+            // self.next_update_time = elapsed_time + random_range(1.0, 2.0);
+            self.next_update_time = elapsed_time + random_range(0.01, 0.05);
         }
     }
 
